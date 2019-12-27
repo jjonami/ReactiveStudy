@@ -30,8 +30,12 @@
 >   - Publisher의 처리는 onComplete() 또는 onError()를 통지해 종료한다.  
     
 ##### RxJava의 기본 구조  
-##### 마블 다이어그램 
-##### RxJava 예제  
+> + Reactive Streams를 지원하는 Flowable, subscriber
+>   - 생산자(Observable) : onSubscribe, onNext, onError, onComplete
+> + Reactive Streams를 지원하지 않고 배압 기능이 없는 Observable, Observer
+>   - Disposable 구도 해지 메서드가 있는 인터페이스 사용
+>   - dispose : 구독 해지
+>   - isDisposed : 구독 해지 true, 해지 않음 false 반환
 ##### RxJava의 전체 구성  
 
 
@@ -76,9 +80,13 @@
 > + Maybe class : 데이터를 0~1개 발행
 > + Hot Observables
 >   - 구독자 존재 여부와 관계없이 데이터 발행
+>   - 여러 소비자와 구독 관계 > 이미 생성한 통지 데이터의 타임라인에 나중에 소비자가 참가하는 것을 허용
+>   - 소비자는 구독한 시점부터 데이터를 받음
+>   - 같은 데이터를 여러 소비자가 받을 수 있음
 >   - 배압(back pressure)을 고려해야 함
 >   - ex) 마우스 이벤트, 키보드 이벤트, 시스템 이벤트, 센서 에이터, 주식 가격
 > + Cold Observables (default)
+>   - 1개의 소비자와 구독 관계 > 통지하는 데이터의 타임라인은 구독할 때마다 생성
 >   - observer가 subscribe 하지 않으면 데이터 발행 안함
 >   - 게으른(lazy) 접근법
 >   - ex)웹 요청, DB쿼리, 파일 읽기

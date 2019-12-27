@@ -2,8 +2,6 @@ package RRP;
 
 import io.reactivex.rxjava3.core.BackpressureStrategy;
 import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.FlowableEmitter;
-import io.reactivex.rxjava3.core.FlowableOnSubscribe;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -11,22 +9,19 @@ import org.reactivestreams.Subscription;
 public class L01_FlowableSample {
     public static void main(String[] args) throws Exception{
 
-        //인사말을 통지하는 Flowable 생성
-        Flowable<String> flowable = Flowable.create(new FlowableOnSubscribe<String>() {
-            @Override
-            public void subscribe(FlowableEmitter<String> emitter) throws Exception {
-                String[] datas = {"Hello, World!", "나의 RxJava Study"};
+        //Flowable 생성
+        Flowable<String> flowable = Flowable.create(emitter -> {
+            String[] datas = {"Hello, World!", "My RxJava Study"};
 
-                for(String data: datas){
-                    //구독이 해지되면 처리를 중단
-                    if(emitter.isCancelled()) return;
-                    //데이터 통지
-                    emitter.onNext(data);
-                }
-
-                //완료 통지
-                emitter.onComplete();
+            for(String data: datas){
+                //구독이 해지되면 처리를 중단
+                if(emitter.isCancelled()) return;
+                //데이터 통지
+                emitter.onNext(data);
             }
+
+            //완료 통지
+            emitter.onComplete();
         }, BackpressureStrategy.BUFFER); //초과 데이터는 버퍼링
 
         flowable
@@ -62,7 +57,7 @@ public class L01_FlowableSample {
                 public void onComplete() {
                     //실행 중 스레드 이름 얻기
                     String threadName = Thread.currentThread().getName();
-                    System.out.println(threadName + ": 완료");
+                    System.out.println(threadName + ": Fin.");
                 }
 
                 //에러 통지 시 처리
