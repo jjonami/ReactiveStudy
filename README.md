@@ -36,6 +36,14 @@
 >   - Disposable 구도 해지 메서드가 있는 인터페이스 사용
 >   - dispose : 구독 해지
 >   - isDisposed : 구독 해지 true, 해지 않음 false 반환
+> + Flowable vs Observable
+>   - Flowable 사용
+>       + 대량 데이터(10,000건 이상)를 처리할 때
+>       + 네트워크 통신이나 DB 등의 I/O를 처리할 때
+>   - Observable 사용
+>       + GUI 이벤트
+>       + 소량 데이터(1,000건 이하)를 처리할 때
+>       + 데이터 처리가 기본으로 동기 방식이며, 자바 표준의 Stream 대신 사용할 때
 ##### RxJava의 전체 구성  
 
 
